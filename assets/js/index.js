@@ -4,7 +4,6 @@ var filter = 'All';
 var sortedMenu = fakeRequisition();
 var onLoadFilter = false;
 var cart = [];
-//calculateBodyContentWidth()
 generateCards();
 //EVENTS
 window.addEventListener('scroll', displayBackTop);
@@ -215,15 +214,6 @@ function fakeRequisition() {
     ];
     return menu.sort(function (item1, item2) { return (item1.title < item2.title) ? -1 : 1; });
 }
-function calculateBodyContentWidth() {
-    var _a, _b;
-    var bodyWidth = (_a = document.querySelector('body')) === null || _a === void 0 ? void 0 : _a.clientWidth;
-    var cartWidth = (_b = document.querySelector('.cart-area')) === null || _b === void 0 ? void 0 : _b.clientWidth;
-    var bodyContent = document.querySelector('.body-content');
-    if (bodyContent instanceof HTMLElement && bodyWidth !== undefined && cartWidth !== undefined) {
-        bodyContent.style.width = "".concat(bodyWidth - cartWidth, "px");
-    }
-}
 function generateCards() {
     var _a;
     for (var i in sortedMenu) {
@@ -265,7 +255,6 @@ function filterClick(e) {
     }
 }
 function filterItems(filter) {
-    //let filteredMenu = sortedMenu;
     var itemsBox = document.querySelector('.items-box');
     if (itemsBox instanceof HTMLElement) {
         itemsBox.style.opacity = '0';
@@ -278,18 +267,11 @@ function filterItems(filter) {
         }
     });
     if (filter !== 'All') {
-        //filteredMenu = filteredMenu.filter((item) => (item.type === filter));
-        //Tenho 2 opções
-        //1- removo todos os cards toda vez q filtrar
-        //e chamo a função generateCards dnv
-        //2-Adiciono um data-type nos cards, seleciono todos com
-        //esse data-type e coloco display:none
         document.querySelectorAll('.items-box .item-card').forEach(function (item) {
             if (item instanceof HTMLElement && item.getAttribute('data-type') === filter) {
                 item.style.display = 'flex';
             }
         });
-        //document.querySelectorAll('.filter-card')
     }
     else {
         document.querySelectorAll('.items-box .item-card').forEach(function (item) {
@@ -337,7 +319,6 @@ function handleAddCartButton(e) {
             }
         }
     }
-    //console.log(cart);
     displayNotification();
     updateCart();
 }

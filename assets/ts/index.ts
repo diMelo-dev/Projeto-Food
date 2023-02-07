@@ -3,7 +3,6 @@ let filter: string = 'All';
 let sortedMenu = fakeRequisition();
 let onLoadFilter: boolean = false;
 let cart: {id: number, qtd: number}[] = [];
-//calculateBodyContentWidth()
 generateCards();
 
 
@@ -16,6 +15,7 @@ document.querySelectorAll('.filter-card').forEach((item) => {
 document.querySelector('.cart-box')?.addEventListener('click', openCart);
 document.querySelector('.cart-header')?.addEventListener('click', closeCart);
 document.querySelector('.menu-mobile-box')?.addEventListener('click', menuAction);
+
 
 //FUNCTIONS
 function displayBackTop() {
@@ -221,16 +221,6 @@ function fakeRequisition() {
     return menu.sort((item1, item2) => (item1.title < item2.title) ? -1 : 1);
 }
 
-function calculateBodyContentWidth() {
-    let bodyWidth = document.querySelector('body')?.clientWidth;
-    let cartWidth = document.querySelector('.cart-area')?.clientWidth;
-    let bodyContent = document.querySelector('.body-content');
-
-    if(bodyContent instanceof HTMLElement && bodyWidth !== undefined && cartWidth !== undefined) {
-        bodyContent.style.width = `${bodyWidth - cartWidth}px`;
-    }
-}
-
 function generateCards() {
 
     for(let i in sortedMenu) {
@@ -283,15 +273,12 @@ function filterClick(e: Event) {
 }
 
 function filterItems(filter: string) {
-    //let filteredMenu = sortedMenu;
-
     let itemsBox = document.querySelector('.items-box');
     if(itemsBox instanceof HTMLElement) {
         itemsBox.style.opacity = '0';
         onLoadFilter = true;
         toggleLoader('flex');
     }
-    
     
     document.querySelectorAll('.items-box .item-card').forEach((item) => {
         if(item instanceof HTMLElement) {
@@ -300,22 +287,11 @@ function filterItems(filter: string) {
     });
 
     if(filter !== 'All') {
-        //filteredMenu = filteredMenu.filter((item) => (item.type === filter));
-        
-        //Tenho 2 opções
-
-        //1- removo todos os cards toda vez q filtrar
-        //e chamo a função generateCards dnv
-
-        //2-Adiciono um data-type nos cards, seleciono todos com
-        //esse data-type e coloco display:none
         document.querySelectorAll('.items-box .item-card').forEach((item) => {
             if(item instanceof HTMLElement && item.getAttribute('data-type') === filter) {
                 item.style.display = 'flex';
             }
         });
-
-        //document.querySelectorAll('.filter-card')
     } else {
         document.querySelectorAll('.items-box .item-card').forEach((item) => {
             if(item instanceof HTMLElement) {
@@ -323,10 +299,6 @@ function filterItems(filter: string) {
             }
         });
     }
-
-    
-
-
 
     setTimeout(() => {
         if(itemsBox instanceof HTMLElement) {
@@ -336,7 +308,6 @@ function filterItems(filter: string) {
         }
     }, 2000);
 
-    
 }
 
 function toggleLoader(display: string) {
@@ -378,7 +349,6 @@ function handleAddCartButton(e: Event) {
         }
         
     }
-    //console.log(cart);
     displayNotification();
     updateCart();
 }
